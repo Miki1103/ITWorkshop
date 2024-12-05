@@ -1,0 +1,183 @@
+・サービス名
+簿記試験攻略ゲーム
+
+・5W1H
+who 就労移行支援事業所の利用者の方
+(簿記試験を受ける事を検討している方)
+
+what 簿記試験勉強を楽しく学ぶゲーム
+
+when 12月24日リリース
+
+where ？
+
+why 職業訓練校で取得可能である簿記試験の勉強の
+　　お手伝いになるようなアプリを作りたいから。
+
+how 環境はJava、サーブレットJSP、HTML、CSS、H2データベース
+　　どのように作成するかは↓に記載。
+
+★ログイン
+
+・index.jsp(webapp直下) 
+ログイン画面
+機能としては新規登録とユーザー入力画面
+ボタン「ゲームの説明」を作成　
+もしくは文章で簡単に説明
+
+・User.java(modelパッケージ)　
+ユーザーに関する情報を持つJavaBeans
+データベースに関するやり取りを行う
+
+・UserAuthenticator.java(modelパッケージ)
+パスワードのハッシュ化
+入力された情報の一致確認
+
+・LoginSuccess.jsp(viewパッケージ)
+ログイン成功画面
+ボタン「ゲームスタート」を作成
+
+・AccountCreated.jsp(viewパッケージ)
+新規登録完了画面
+ボタン「ゲームスタート」を作成
+
+・LoginError.jsp(viewパッケージ)
+ログイン失敗画面
+ボタン「トップ画面に戻る」を作成
+
+・Login.java(servlretパッケージ)
+リクエストの受け取り
+認証処理
+レスポンスの作成
+(成功→コース選択)
+(失敗→トップ画面に戻る) 
+
+--------------------------------------------------
+
+★問題回答
+
+・Question.java(modelパッケージ)
+問題に関するデータを管理
+プロパティ
+①id:問題のid 
+②text:問題文　　
+③choices:選択肢 
+④correct_answer:正解 
+
+メソッド
+is_corrent(answer):回答が正しいかどうか判定。
+
+・Character.java(modelパッケージ)
+キャラクターのステータスを管理
+プロパティ
+①id:問題のid 
+②name:キャラクター名 
+③max_hp:最大HP 　
+④hp:現在のhp
+
+メソッド
+reduce_hp(amount):HPを減少
+is_alive():キャラクターが生存しているか確認。
+
+・Game.java(modelパッケージ)
+ゲーム全体の進行を管理
+プロパティ
+①id:問題のid 
+②player_character: プレイヤーのキャラクター（Characterインスタンス）
+③enemy_character: 敵のキャラクター（Characterインスタンス）
+④current_question: 現在の問題（Questionインスタンス）
+
+メソッド
+next_question(): 次の問題を取得。
+check_answer(answer): 答えを確認し、HPを調整。
+is_game_over(): ゲーム終了条件を確認。
+
+・QuestionView.jsp(viewパッケージ)
+問題文や選択肢を表しする画面。
+プレイヤーと敵のHPを表示する画面。
+
+・GameOverView.jsp(viewパッケージ)
+ゲームオーバー時の画面。スコアも一緒に出す。
+
+・GameCleaView.jsp(viewパッケージ)
+・ゲームクリア時の画面。スコアも一緒に出す。
+
+・GameController.java(servletパッケージ)
+ユーザーの入力を受け取り、ゲームの進行を制御。
+
+メソッド
+handle_answer(answer): 回答を受け取り、モデルを更新。
+update_view(): 現在のゲーム状態に基づいてビューを更新。
+
+---------------------------------------------------
+
+★キャラの状態によって画像を変えるクラス
+
+・CharacterImageManager.java (modelパッケージ)
+キャラクターの状態(HPの割合)を判定し、それぞれに応じた画像パスを返す。
+プロパティ
+character: キャラクターインスタンス（Characterクラス）
+
+メソッド
+get_image_path(): キャラクターの状態に応じた画像パスを返す。
+
+・GameController.java（controllerパッケージ）
+GameControllerクラスで、キャラクターインスタンスをビューに渡す部分を追加します。
+
+-----------------------------------------------------
+
+★テーブル設計
+
+Users - ユーザー情報の管理。
+Questions - 問題データの管理。
+Characters - キャラクター情報の管理。
+GameStatus - ゲーム進行状態の管理。
+GameHistory - ユーザーごとのゲーム履歴を記録。
+
+この5つのテーブルが必要
+
+◎Usersテーブル
+id	INT (PK)	ユーザーID（主キー、自動増分）
+username	VARCHAR(50)	ユーザー名（ユニーク制約）
+password_hash	VARCHAR(255)	パスワードのハッシュ値
+created_at	TIMESTAMP	アカウント作成日時
+updated_at	TIMESTAMP	最終更新日時
+
+
+
+◎Questionsテーブル
+id	INT (PK)	問題ID（主キー、自動増分）
+text	TEXT	　　　　問題文
+choices	TEXT	　　　　選択肢（JSON形式で保存）
+correct_answer	VARCHAR(255)	正解
+
+
+
+
+◎Characters テーブル
+id	INT (PK)	キャラクターID（主キー、自動増分）
+name	VARCHAR(50)	キャラクター名
+max_hp	INT	最大HP
+hp	INT	現在のHP
+user_id	INT (FK)	ユーザーID（Usersテーブルの外部キー）
+
+
+
+
+◎GameStatus テーブル
+id	INT (PK)	ゲームステータスID（主キー、自動増分）
+user_id	INT (FK)	ユーザーID（Usersテーブルの外部キー）
+current_question_id	INT (FK)	現在の問題ID（Questionsテーブルの外部キー）
+player_character_id	INT (FK)	プレイヤーキャラクターID（Charactersテーブルの外部キー）
+enemy_character_id	INT (FK)	敵キャラクターID（Charactersテーブルの外部キー）
+created_at	TIMESTAMP	ゲーム開始日時
+
+
+
+
+◎GameHistory テーブル
+id	INT (PK)	履歴ID（主キー、自動増分）
+user_id	INT (FK)	ユーザーID（Usersテーブルの外部キー）
+score	INT	最終スコア
+result	VARCHAR(50)	結果（例: "Win", "Lose"）
+completed_at	TIMESTAMP	ゲーム終了日時

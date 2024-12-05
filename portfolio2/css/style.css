@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+/* 共通部分 */
+html{
+    font-size: 100%;
+}
+
+body{
+    background-color: #000000;
+}
+
+a{
+    text-decoration: none;
+}
+
+img{
+    max-width: 100%;
+}
+
+p{
+    color: #ffffff;
+}
+
+/* レイアウト */
+.align-center{
+    text-align: center;
+}
+
+.logo{
+    width: 300px;
+}
+
+/* スタート画面 */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;   /* 2つの同じ幅のカラム */
+    gap: 20px;                        /* 画像間のスペース */
+  }
+  
+.grid-container img {
+    width: 100%;
+    height: auto;                     /* 縦横比を維持 */
+    object-fit: cover;                /* 枠内に画像をフィット */
+  }
+
+h2{
+    color: #ffffff;
+}
+
+.start{
+    margin-top: 20px;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+  
