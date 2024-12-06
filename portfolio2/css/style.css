@@ -17,40 +17,79 @@ img{
     max-width: 100%;
 }
 
-p{
-    color: #ffffff;
-}
-
 /* レイアウト */
 .align-center{
     text-align: center;
 }
 
 .logo{
-    width: 300px;
+    width: 350px;
 }
 
 /* スタート画面 */
 .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;   /* 2つの同じ幅のカラム */
-    gap: 20px;                        /* 画像間のスペース */
+    grid-template-columns: repeat(2, 1fr);  
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;                        
   }
   
 .grid-container img {
-    width: 100%;
-    height: auto;                     /* 縦横比を維持 */
-    object-fit: cover;                /* 枠内に画像をフィット */
+    width: 350px;
+    height: auto; 
+    object-fit: cover;              
   }
 
 h2{
     color: #ffffff;
 }
 
+h3{
+    color: #000000;
+}
+
 .start{
     margin-top: 20px;
     margin-left: 70px;
     margin-right: 70px;
+}
+
+.login-page{
+    background-color: #ffffff;    
+    padding: 20px;                
+    border: 1px solid #ddd;       
+    border-radius: 10px;          
+    text-align: center;           
+    max-width: 500px;             
+    margin: 0 auto;               
+}
+
+.btn {
+    display: inline-block;        
+    background-color:#884898;    
+    color: #ffffff;               
+    padding: 10px 20px;           
+    text-decoration: none;        
+    font-size: 16px;              
+    border: none;                 
+    border-radius: 5px;           
+    cursor: pointer;              
+    transition: background-color 0.3s ease; 
+}
+
+.btn:hover {
+    background-color:#a59aca ; 
+}
+
+input[type="text"], input[type="password"] {
+    padding: 10px;                
+    margin: 10px 30px;               
+    border: 1px solid #ccc;       
+    border-radius: 5px;           
+    box-sizing: border-box;       
+    font-size: 11px;              
 }
 
   

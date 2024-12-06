@@ -15,7 +15,44 @@ why 職業訓練校で取得可能である簿記試験の勉強の
 　　お手伝いになるようなアプリを作りたいから。
 
 how 環境はJava、サーブレットJSP、HTML、CSS、H2データベース
-　　どのように作成するかは↓に記載。
+　　どのように作成するかは下記に記載。
+
+・概要
+簿記試験の勉強を楽しく行えるゲームです。
+出題方式は選択問題です。実際の試験に沿った形でゲームを行うことが出来ます。
+ゲームの内容は味方キャラと敵キャラがいてそれぞれライフ(HP)を持っています。
+もし、問題を間違えると味方HPは減り、問題に正解すると敵HPが減ります。
+味方のHPがなくなればゲームオーバー、敵のHPがなくなればゲームクリアになります。
+スコアが画面に表示されるので満点になるまで何回でも繰り返し勉強ができます。
+
+・開発の背景
+株式会社ジョブリッチの就労移行支援事業所と、就労継続支援A型事業所の
+[強み、特徴]である職業訓練校で取得可能な資格として簿記が上げられており、
+利用者の方のスキルアップにつながるお手伝いができる制作物を作りたいと
+感じたため。
+
+・機能要件
+
+①画面設計
+
+画面遷移図作成済み
+(簡易的なものなので、書き込み必要な場合はその都度書き込む)
+
+②機能設計
+
+ER図を今後作成予定
+(テーブル設計完了してから取り掛かる)
+余力があればJavaのクラス図作成
+
+③データ設計
+データフローを今後作成予定
+
+・制作物のこだわったポイントの記入
+・今後の改善点
+
+の二点も要件定義書に書き加えてGitHabに記載予定。
+
+---------------------------------------------------------
 
 ★ログイン
 
@@ -25,50 +62,78 @@ how 環境はJava、サーブレットJSP、HTML、CSS、H2データベース
 ボタン「ゲームの説明」を作成　
 もしくは文章で簡単に説明
 
+・UserDAO.java(daoパッケージ)
+ユーザー情報のデータベース操作を行う
+
+メソッド
+createUser(User user): 新規ユーザーを登録する。
+findUserByUsername(String username): ユーザー名でユーザー情報を取得する。
+updatePassword(String username, String newPasswordHash): 
+パスワードの更新（必要に応じて）。
+
 ・User.java(modelパッケージ)　
 ユーザーに関する情報を持つJavaBeans
-データベースに関するやり取りを行う
+ユーザーの情報を保持するデータ構造として使用。
+UserDAOは、このクラスを使ってデータをやり取りする。
 
 ・UserAuthenticator.java(modelパッケージ)
 パスワードのハッシュ化
 入力された情報の一致確認
+DAOを使用して、データベースからユーザー情報を取得し、認証。
 
 ・LoginSuccess.jsp(viewパッケージ)
 ログイン成功画面
-ボタン「ゲームスタート」を作成
+ボタン「ゲームの概要」を作成
 
 ・AccountCreated.jsp(viewパッケージ)
 新規登録完了画面
-ボタン「ゲームスタート」を作成
+ボタン「ゲームの概要」を作成
+
+・Account.jsp(viewパッケージ)
+新規登録(ユーザー名とパスワード入力)
+ボタン「確定」を作成
 
 ・LoginError.jsp(viewパッケージ)
 ログイン失敗画面
 ボタン「トップ画面に戻る」を作成
 
 ・Login.java(servlretパッケージ)
-リクエストの受け取り
-認証処理
-レスポンスの作成
-(成功→コース選択)
+UserAuthenticator を利用して認証し、結果に応じて画面を遷移させる。
+(成功→ゲームの概要)
 (失敗→トップ画面に戻る) 
+
+--------------------------------------------------
+
+★ゲームの概要説明
+
+・GameInfo.jsp(viewパッケージ)
+ゲームの概要説明
+キャラの説明とどのようにゲームが進行するかなど
+ボタン「ゲームスタート」を作成
 
 --------------------------------------------------
 
 ★問題回答
 
-・Question.java(modelパッケージ)
-問題に関するデータを管理
+・QuestionDAO.java(daoパッケージ)
+問題データをデータベースから取得・保守するクラス。
 プロパティ
 ①id:問題のid 
 ②text:問題文　　
 ③choices:選択肢 
-④correct_answer:正解 
+④correct_answer:正解
 
 メソッド
+getQuestionById(int id): 指定されたIDの問題を取得。
+getAllQuestions(): すべての問題を取得。
+必要に応じて addQuestion(Question question) で新しい問題を追加可能。
 is_corrent(answer):回答が正しいかどうか判定。
 
-・Character.java(modelパッケージ)
-キャラクターのステータスを管理
+・Question.java(modelパッケージ)
+Questionテーブルのレコードを表すクラス。
+ 
+・CharacterDAO.java(daoパッケージ)
+キャラクター情報（HPや名前など）を管理するクラス。
 プロパティ
 ①id:問題のid 
 ②name:キャラクター名 
@@ -76,11 +141,17 @@ is_corrent(answer):回答が正しいかどうか判定。
 ④hp:現在のhp
 
 メソッド
+getCharacterById(int id): 指定されたIDのキャラクターを取得。
+updateCharacter(Character character): キャラクターの状態を更新（例: HP変更）。
+必要に応じて addCharacter(Character character) で新しいキャラクターを追加可能。
 reduce_hp(amount):HPを減少
 is_alive():キャラクターが生存しているか確認。
 
-・Game.java(modelパッケージ)
-ゲーム全体の進行を管理
+・Character.java(modelパッケージ)
+Characterテーブルのレコードを表すクラス。
+
+・GameDAO.java(daoパッケージ)
+ゲームの進行状態やスコアを保存・取得するクラス。
 プロパティ
 ①id:問題のid 
 ②player_character: プレイヤーのキャラクター（Characterインスタンス）
@@ -88,9 +159,15 @@ is_alive():キャラクターが生存しているか確認。
 ④current_question: 現在の問題（Questionインスタンス）
 
 メソッド
+saveGameStatus(Game game): ゲームの進行状態を保存。
+getGameById(int id): 指定されたゲームの状態を取得。
+saveGameResult(int gameId, int score, boolean isClear): ゲーム結果を保存。
 next_question(): 次の問題を取得。
 check_answer(answer): 答えを確認し、HPを調整。
 is_game_over(): ゲーム終了条件を確認。
+
+・Game.java(modelパッケージ)
+Gameテーブルのレコードを表すクラス。
 
 ・QuestionView.jsp(viewパッケージ)
 問題文や選択肢を表しする画面。
@@ -122,7 +199,7 @@ character: キャラクターインスタンス（Characterクラス）
 get_image_path(): キャラクターの状態に応じた画像パスを返す。
 
 ・GameController.java（controllerパッケージ）
-GameControllerクラスで、キャラクターインスタンスをビューに渡す部分を追加します。
+GameControllerクラスで、キャラクターインスタンスをビューに渡す部分を追加。
 
 -----------------------------------------------------
 
