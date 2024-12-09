@@ -17,7 +17,7 @@
 </head>
 <body>
     <h1 class="align-center">
-        <a href="index.html"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="簿記試験攻略ゲーム">
+        <a href="/Portfolio2/index.jsp"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="簿記試験攻略ゲーム">
             </a>
     </h1>
 
@@ -39,6 +39,5 @@
     <img class="girl" src="http://localhost:8080/Portfolio2/images/girl1.gif">
     <img class="girl" src="http://localhost:8080/Portfolio2/images/girl2.gif">
     </div>
-
 </body>
 </html>

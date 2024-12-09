@@ -140,7 +140,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="C:\Users\8Java26\Desktop\制作実習\ITWorkshop\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\Users\8Java26\Desktop\制作実習\ITWorkshop\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Portfolio1" path="/Portfolio1" reloadable="false" source="org.eclipse.jst.jee.server:Portfolio1"/><Context docBase="C:\Users\8Java26\Desktop\制作実習\ITWorkshop\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Portfolio2" path="/Portfolio2" reloadable="false" source="org.eclipse.jst.jee.server:Portfolio2"/></Host>
+      <Context docBase="C:\Users\8Java26\Desktop\制作実習\ITWorkshop\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\Users\8Java26\Desktop\制作実習\ITWorkshop\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Portfolio1" path="/Portfolio1" reloadable="false" source="org.eclipse.jst.jee.server:Portfolio1"/></Host>
     </Engine>
   </Service>
 </Server>

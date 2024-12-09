@@ -17,7 +17,7 @@
 </head>
 <body>
     <h1 class="align-center">
-        <a href="index.html"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="簿記試験攻略ゲーム">
+        <a href="/Portfolio2/index.jsp"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="簿記試験攻略ゲーム">
             </a>
     </h1>
 
@@ -26,7 +26,7 @@
     </h2>
 
     <div class="login-page">
-    <form action="Login" method="post">
+    <form action="/Portfolio2/Register" method="post">
         ユーザー名:<input type="text" name="name"><br>
         パスワード:<input type="password" name="pass"><br>
         <input type="submit" value="確定する" class="btn">

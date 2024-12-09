@@ -174,7 +174,7 @@ Gameテーブルのレコードを表すクラス。
 ・GameOverView.jsp(viewパッケージ)
 ゲームオーバー時の画面。スコアも一緒に出す。
 
-・GameCleaView.jsp(viewパッケージ)
+・GameClearView.jsp(viewパッケージ)
 ・ゲームクリア時の画面。スコアも一緒に出す。
 
 ・GameController.java(servletパッケージ)
