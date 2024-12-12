@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="ゲーム感覚で簿記の勉強ができるアプリ">
-    <title>新規登録完了画面</title>
+    <title>エラー発生画面</title>
     <meta name="viewport" content="width, initial-scale=1">
 
     <!-- リセットCSS -->
@@ -23,15 +23,15 @@
 
     <div class="login-page">
         <h3 class="start align-center">
-            新規登録が完了しました！<br>
-            <% String user = (String) session.getAttribute("user"); %>
-            <%= user %>さん、ようこそ！
+            予期せぬエラーが発生しました。<br>
+            もう一度初めからやり直してください。
         </h3>
-    <a href="/Portfolio2/html/GameInfo.html" class="btn">ゲームの概要</a>
+    <a href="/Portfolio2/index.jsp" class="btn">トップページへ戻る</a>
     </div>
 
     <div class="grid-container2">
-    <img class="girl" src="http://localhost:8080/Portfolio2/images/girl4.gif">
+    <img class="girl" src="http://localhost:8080/Portfolio2/images/girl3.gif">
     </div>
+
 </body>
 </html>

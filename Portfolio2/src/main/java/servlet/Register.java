@@ -30,10 +30,12 @@ public class Register extends HttpServlet {
 
         try {
             userDAO.createUser(user);
+         // 新規登録成功時、ユーザー情報をセッションに保存 
+            request.getSession().setAttribute("user",username);
             response.sendRedirect("/Portfolio2/jsp/AccountCreated.jsp");
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("/Portfolio2/jsp/InputError.jsp");
+            response.sendRedirect("/Portfolio2/jsp/Error.jsp");
         }
     }
 }

@@ -27,8 +27,8 @@
 
     <div class="login-page">
     <form action="/Portfolio2/Register" method="post">
-        ユーザー名:<input type="text" name="name"><br>
-        パスワード:<input type="password" name="pass"><br>
+        ユーザー名:<input type="text" name="username"><br>
+        パスワード:<input type="password" name="password"><br>
         <input type="submit" value="確定する" class="btn">
     </form>
     </div>

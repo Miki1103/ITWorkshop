@@ -79,32 +79,46 @@ UserDAOは、このクラスを使ってデータをやり取りする。
 入力された情報の一致確認
 DAOを使用して、データベースからユーザー情報を取得し、認証。
 
-・LoginSuccess.jsp(viewパッケージ)
+・LoginSuccess.jsp(jspファイル)
 ログイン成功画面
 ボタン「ゲームの概要」を作成
 
-・AccountCreated.jsp(viewパッケージ)
+・AccountCreated.jsp(jspファイル)
 新規登録完了画面
 ボタン「ゲームの概要」を作成
 
-・Account.jsp(viewパッケージ)
+・Account.jsp(jspファイル)
 新規登録(ユーザー名とパスワード入力)
 ボタン「確定」を作成
 
-・LoginError.jsp(viewパッケージ)
+・LoginError.jsp(jspファイル)
 ログイン失敗画面
-ボタン「トップ画面に戻る」を作成
+ボタン「トップ画面へ戻る」を作成
+
+・InputError.jsp(jspファイル)
+入力失敗画面
+ボタン「トップページへ戻る」を作成
+
+・Error.jsp(jspファイル)
+エラー発生画面
+ボタン「トップページへ戻る」を作成
 
 ・Login.java(servlretパッケージ)
 UserAuthenticator を利用して認証し、結果に応じて画面を遷移させる。
 (成功→ゲームの概要)
 (失敗→トップ画面に戻る) 
 
+・Register.java(servlretパッケージ)
+UserAuthenticator.javaとUser.java を利用して認証し、結果に応じて画面を遷移させる。
+(成功→新規登録完了画面)
+(入力失敗→トップ画面へ戻る)
+(エラー発生画面→トップページへ戻る)
+
 --------------------------------------------------
 
 ★ゲームの概要説明
 
-・GameInfo.jsp(viewパッケージ)
+・GameInfo.html(htmlフォルダ)
 ゲームの概要説明
 キャラの説明とどのようにゲームが進行するかなど
 ボタン「ゲームスタート」を作成
@@ -174,7 +188,7 @@ Gameテーブルのレコードを表すクラス。
 ・GameOverView.jsp(viewパッケージ)
 ゲームオーバー時の画面。スコアも一緒に出す。
 
-・GameClearView.jsp(viewパッケージ)
+・GameCleaView.jsp(viewパッケージ)
 ・ゲームクリア時の画面。スコアも一緒に出す。
 
 ・GameController.java(servletパッケージ)

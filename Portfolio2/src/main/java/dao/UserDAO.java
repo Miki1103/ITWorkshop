@@ -16,8 +16,10 @@ public class UserDAO {
 
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try {
+            Class.forName("org.h2.Driver"); // ここでドライバーをロード
+            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPasswordHash());
             stmt.executeUpdate();
@@ -27,37 +29,50 @@ public class UserDAO {
                     user.setId(generatedKeys.getInt(1));
                 }
             }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("JDBCドライバーが見つかりませんでした", e);
         }
     }
 
     public User findUserByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE username = ?";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new User(
-                        rs.getInt("id"),
-                        rs.getString("username"),
-                        rs.getString("password_hash"),
-                        rs.getTimestamp("created_at"),
-                        rs.getTimestamp("updated_at")
-                    );
+        try {
+            Class.forName("org.h2.Driver"); // JDBCドライバーを明示的にロード
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return new User(
+                            rs.getInt("id"),
+                            rs.getString("username"),
+                            rs.getString("password_hash"),
+                            rs.getTimestamp("created_at"),
+                            rs.getTimestamp("updated_at")
+                        );
+                    }
                 }
             }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("JDBCドライバーが見つかりませんでした", e);
         }
         return null;
     }
 
     public void updatePassword(String username, String newPasswordHash) throws SQLException {
         String sql = "UPDATE users SET password_hash = ? WHERE username = ?";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, newPasswordHash);
-            stmt.setString(2, username);
-            stmt.executeUpdate();
+        try {
+            Class.forName("org.h2.Driver"); // JDBCドライバーを明示的にロード
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, newPasswordHash);
+                stmt.setString(2, username);
+                stmt.executeUpdate();
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("JDBCドライバーが見つかりませんでした", e);
         }
     }
 }
+
 

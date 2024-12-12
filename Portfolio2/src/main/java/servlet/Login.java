@@ -12,22 +12,22 @@ import model.UserAuthenticator;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // パラメータ名を変更
-        String username = request.getParameter("name");
-        String password = request.getParameter("pass");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
         UserAuthenticator authenticator = new UserAuthenticator();
 
         try {
             if (authenticator.authenticate(username, password)) {
-                // ログイン成功時
-                request.getRequestDispatcher("/Portfolio2/jsp/LoginSuccess.jsp").forward(request, response);
+                // ログイン成功時、ユーザー情報をセッションに保存
+                request.getSession().setAttribute("user", username);
+                request.getRequestDispatcher("/jsp/LoginSuccess.jsp").forward(request, response);
             } else {
-                // ログイン失敗時
-                request.getRequestDispatcher("/Portfolio2/jsp/LoginError.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/LoginError.jsp").forward(request, response);
             }
         } catch (Exception e) {
             throw new ServletException(e);
         }
     }
 }
+

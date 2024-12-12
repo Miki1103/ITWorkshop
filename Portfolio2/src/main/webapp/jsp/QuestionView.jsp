@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="ゲーム感覚で簿記の勉強ができるアプリ">
-    <title>新規登録完了画面</title>
+    <title>ゲームスタート画面</title>
     <meta name="viewport" content="width, initial-scale=1">
 
     <!-- リセットCSS -->
@@ -21,17 +21,21 @@
             </a>
     </h1>
 
-    <div class="login-page">
-        <h3 class="start align-center">
-            新規登録が完了しました！<br>
-            <% String user = (String) session.getAttribute("user"); %>
-            <%= user %>さん、ようこそ！
-        </h3>
-    <a href="/Portfolio2/html/GameInfo.html" class="btn">ゲームの概要</a>
-    </div>
-
-    <div class="grid-container2">
-    <img class="girl" src="http://localhost:8080/Portfolio2/images/girl4.gif">
+    <h2 class="start align-center">
+        選択肢から答えを選んでください<br>
+    </h2>
+	 <h1>問題</h1>
+    <p>${question.text}</p>
+    <form action="GameController" method="post">
+        <input type="hidden" name="questionId" value="${question.id}" />
+        <c:forEach var="choice" items="${question.choices.split(',')}">
+            <input type="radio" name="answer" value="${choice}" /> ${choice}<br/>
+        </c:forEach>
+        <button type="submit" name="action" value="answer">回答</button>
+    </form>
+    <div class="grid-container">
+    <img class="girl" src="http://localhost:8080/Portfolio2/images/girl1.gif">
+    <img class="girl" src="http://localhost:8080/Portfolio2/images/girl2.gif">
     </div>
 </body>
 </html>
