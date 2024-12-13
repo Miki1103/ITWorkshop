@@ -4,10 +4,9 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="ゲーム感覚で簿記の勉強ができるアプリ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>スタート画面</title>
-    <meta name="viewport" content="width, initial-scale=1">
-
+ 
     <!-- リセットCSS -->
      <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
 

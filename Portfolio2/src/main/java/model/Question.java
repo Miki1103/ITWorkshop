@@ -1,16 +1,21 @@
+
 package model;
+
+import java.util.List;
 
 public class Question {
     private int id;
     private String text;
-    private String choices;
+    private List<String> choices;
     private String correctAnswer;
+    private int weight;
 
-    public Question(int id, String text, String choices, String correctAnswer) {
+    public Question(int id, String text, List<String> choices, String correctAnswer, int weight) {
         this.id = id;
         this.text = text;
         this.choices = choices;
         this.correctAnswer = correctAnswer;
+        this.weight = weight;
     }
 
     public int getId() {
@@ -21,12 +26,19 @@ public class Question {
         return text;
     }
 
-    public String getChoices() {
+    public List<String> getChoices() {
         return choices;
     }
 
     public String getCorrectAnswer() {
         return correctAnswer;
     }
+
+    public int getWeight() {
+        return weight;
+    }
 }
+
+
+
 

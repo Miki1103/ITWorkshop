@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="ゲーム感覚で簿記の勉強ができるアプリ">
     <title>新規登録完了画面</title>
-    <meta name="viewport" content="width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- リセットCSS -->
      <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
