@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.List;
@@ -37,7 +36,24 @@ public class Question {
     public int getWeight() {
         return weight;
     }
+
+    // オーバーライドされた equals メソッド
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;                      // 同じインスタンスの場合は等しい
+        if (obj == null || getClass() != obj.getClass()) return false; // 型が異なる場合は等しくない
+        Question question = (Question) obj;
+        return id == question.id;                          // IDで等価性を比較
+    }
+
+    // オーバーライドされた hashCode メソッド
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);                       // IDのハッシュコードを生成
+    }
 }
+
+
 
 
 

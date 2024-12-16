@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ゲームオーバー画面</title>
+    <title>ゲームクリア画面</title>
  
     <!-- リセットCSS -->
      <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
@@ -21,11 +21,11 @@
     </h1>
 <body>
 <div class="game-main">
-    <h1>ゲームオーバー</h1>
-    <p>残念ですが、スコアが基準に達しませんでした。</p>
+    <h1>ゲームクリア！</h1>
+    <p>おめでとうございます！素晴らしい結果を達成しました。</p>
     <p>正解数: ${score} / ${total}</p>
-    <p>再挑戦して、より高いスコアを目指しましょう！</p>
-     <a href="/Portfolio2/jsp/LogoutSuccess.jsp">ログアウト</a>
+    <p>高得点を達成しました！次のチャレンジにも挑戦しましょう。</p>
+    <a href="/Portfolio2/jsp/LogoutSuccess.jsp">ログアウト</a>
 </div>
 </body>
 </html>
