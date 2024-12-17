@@ -47,10 +47,16 @@ public class Game {
     }
 
     public void checkAnswer(String answer) {
-        if (getCurrentQuestion().getCorrectAnswer().equals(answer)) {
-            enemyCharacter.reduceHp(10); // 正解したら敵のHPを減らす
+        System.out.println("DEBUG: Correct Answer = " + getCurrentQuestion().getCorrectAnswer());
+        System.out.println("DEBUG: User Answer = " + answer);
+
+        // 前方一致で回答をチェック
+        if (answer.trim().startsWith(getCurrentQuestion().getCorrectAnswer().trim())) {
+            enemyCharacter.reduceHp(10); // 正解時: 敵のHPを減らす
+            System.out.println("DEBUG: Enemy HP reduced to " + enemyCharacter.getHp());
         } else {
-            playerCharacter.reduceHp(10); // 間違えたらプレイヤーのHPを減らす
+            playerCharacter.reduceHp(10); // 不正解時: プレイヤーのHPを減らす
+            System.out.println("DEBUG: Player HP reduced to " + playerCharacter.getHp());
         }
     }
 

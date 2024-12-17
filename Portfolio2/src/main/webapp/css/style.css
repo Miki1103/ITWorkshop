@@ -154,7 +154,7 @@ input[type="text"], input[type="password"] {
     justify-content: center;      /* 縦方向の中央揃え */
     align-items: center;          
     background-color: #ffffff;    
-    text-align: center;          
+    text-align: center;        
 }
 
 /* 質問コンテナ */
@@ -162,50 +162,63 @@ input[type="text"], input[type="password"] {
     margin-bottom: 20px;
 }
 
-.question-container h2 {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
 .question-container h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-bottom: 10px;
 }
 
- .hp-bar {
-     width: 100%;
-     background-color: #ddd;
-     border-radius: 5px;
-     margin-bottom: 10px;
- }
- 
- .hp-bar-inner {
-     height: 20px;
-    border-radius: 5px;
- }
- 
- .player-hp { background-color: #4caf50; } /* 緑色 */
- 
- .enemy-hp { background-color: #f44336; } /* 赤色 */
- 
- /* ステータスコンテナ */
-.status-container {
-    margin-top: 20px;
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.status-container p {
-    margin: 10px 0;
+ .grid-container img {
+    width: 350px;
+    height: auto;
+    object-fit: cover;
+ }
+
+ .status-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+ }
+
+ .status-container div {
+    padding: 30px;
+    border: 1px solid #ccc;
+ }
+
+.hp-bar {
+    background-color: #ddd;
+    height: 20px;
+    position: relative;
+    width: 100%;
+}
+
+.hp-bar-inner {
+    height: 100%;
+    background-color: #4caf50;
+}
+
+.hp-bar-inner.enemy-hp {
+    background-color: #f44336;
 }
 
 /* ゲームメイン画面ボタン */
 button {
+	margin-top: 20px;
     display: inline-block;        
     background-color:#884898;    
     color: #ffffff;               
     padding: 10px 20px;           
     text-decoration: none;        
-    font-size: 22px;              
+    font-size: 1.0rem;              
     border: none;                 
     border-radius: 5px;           
     cursor: pointer;              
@@ -215,6 +228,18 @@ button {
 
 button:hover {
     background-color:#a59aca ; 
+}
+
+/*ゲームログアウト画面*/
+.game-logout{
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-wrap: break-word; /* 長い文字列を折り返す */
+    text-align: center;
 }
 
 /* 標準ボタン */
@@ -229,7 +254,8 @@ button:hover {
     border: none;                 
     border-radius: 5px;           
     cursor: pointer;              
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease;
+    margin-top: 20px; 
 }
 
 .btn:hover {

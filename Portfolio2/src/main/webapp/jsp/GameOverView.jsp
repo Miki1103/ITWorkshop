@@ -20,12 +20,14 @@
             </a>
     </h1>
 <body>
-<div class="game-main">
+<div class="game-logout">
     <h1>ゲームオーバー</h1>
-    <p>残念ですが、スコアが基準に達しませんでした。</p>
-    <p>正解数: ${score} / ${total}</p>
-    <p>再挑戦して、より高いスコアを目指しましょう！</p>
-     <a href="/Portfolio2/jsp/LogoutSuccess.jsp">ログアウト</a>
+    <p>残念ですが、味方のHPが敵のHPを下回りました。</p>
+    <p>再挑戦して、敵を倒せるように頑張りましょう！</p>
+    <a href="/Portfolio2/jsp/LogoutSuccess.jsp" class="btn">ログアウト</a>
 </div>
+ <div class="grid-container2">
+    <img class="girl" src="http://localhost:8080/Portfolio2/images/girl3.gif">
+    </div>
 </body>
 </html>

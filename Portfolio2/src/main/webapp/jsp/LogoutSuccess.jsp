@@ -21,7 +21,7 @@
         <h3 class="start align-center">
             ログアウトに成功しました！<br>
             <% String user = (String) session.getAttribute("user"); %>
-            <%= user %>さん、また遊んでくださいね！
+            <%= user %>さん<br>また遊んでくださいね！
         </h3>
         <a href="/Portfolio2/index.jsp" class="btn">トップページへ戻る</a>
     </div>

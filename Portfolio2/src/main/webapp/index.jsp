@@ -21,7 +21,7 @@
     </h1>
 
     <h2 class="start align-center">
-        簿記試験の勉強をゲーム感覚で行えるゲームです。<br>
+        ITパスポート試験の勉強をゲーム感覚で行えるゲームです。<br>
     </h2>
 
     <div class="login-page">

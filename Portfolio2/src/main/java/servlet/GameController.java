@@ -13,12 +13,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Character;
+import model.CharacterImageManager;
 import model.Game;
 import model.Question;
 
 @WebServlet("/GameController")
 public class GameController extends HttpServlet {
-	private GameDAO gameDAO;
+    private GameDAO gameDAO;
     private QuestionDAO questionDAO;
 
     @Override
@@ -31,6 +32,11 @@ public class GameController extends HttpServlet {
             System.out.println("Failed to initialize DAOs: " + e.getMessage());
             throw new ServletException("Initialization failed", e);
         }
+    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // GETリクエストをPOST処理に委譲
+        doPost(request, response);
     }
 
     @Override
@@ -84,8 +90,16 @@ public class GameController extends HttpServlet {
 
             System.out.println("Game created with ID: " + game.getId());
 
+            // キャラクター画像のパスを生成
+            CharacterImageManager playerImageManager = new CharacterImageManager(playerCharacter);
+            CharacterImageManager enemyImageManager = new CharacterImageManager(enemyCharacter);
+            
             request.getSession().setAttribute("game", game);
-            System.out.println("Game object set in session scope.");
+            request.setAttribute("playerImagePath", playerImageManager.getImagePath());
+            request.setAttribute("enemyImagePath", enemyImageManager.getImagePath());
+            request.setAttribute("questions", questions);
+
+            System.out.println("Game object and image paths set in request scope.");
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/QuestionView.jsp");
             dispatcher.forward(request, response);
@@ -98,56 +112,61 @@ public class GameController extends HttpServlet {
 
     private void submitAnswer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // セッションスコープからゲームオブジェクトを取得
             Game game = (Game) request.getSession().getAttribute("game");
-
-            // ゲームオブジェクトがセッションに存在しない場合の処理
             if (game == null) {
                 System.out.println("No game object in session. Redirecting to index page.");
                 response.sendRedirect("/Portfolio2/index.jsp");
                 return;
             }
 
-            // ユーザーの回答を取得して判定
+            // ユーザーの回答を取得し、nullチェック
             String userAnswer = request.getParameter("answer");
-            game.checkAnswer(userAnswer);
 
-            System.out.println("DEBUG: プレイヤーHP: " + game.getPlayerCharacter().getHp());
-            System.out.println("DEBUG: 敵HP: " + game.getEnemyCharacter().getHp());
-
-            // ゲームオーバー判定
-            if (game.isGameOver()) {
-                String resultPage = game.getPlayerCharacter().isAlive()
-                                    ? "/jsp/GameClearView.jsp"
-                                    : "/jsp/GameOverView.jsp";
-
-                // ゲームオブジェクトをセッションから削除
-                request.getSession().removeAttribute("game");
-                System.out.println("Game object removed from session scope.");
-
-                request.setAttribute("game", game);
-                RequestDispatcher dispatcher = request.getRequestDispatcher(resultPage);
+            if (userAnswer == null || userAnswer.trim().isEmpty()) {
+                System.out.println("User did not select an answer. Redirecting to NullError.jsp.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/NullError.jsp");
                 dispatcher.forward(request, response);
                 return;
             }
 
-            // 次の質問がある場合
+            // ユーザーの回答をチェック
+            game.checkAnswer(userAnswer.trim());
+
+            System.out.println("DEBUG: Player HP: " + game.getPlayerCharacter().getHp());
+            System.out.println("DEBUG: Enemy HP: " + game.getEnemyCharacter().getHp());
+
+            // キャラクター画像のパスを再設定
+            CharacterImageManager playerImageManager = new CharacterImageManager(game.getPlayerCharacter());
+            CharacterImageManager enemyImageManager = new CharacterImageManager(game.getEnemyCharacter());
+
+            String playerImagePath = request.getContextPath() + "/" + playerImageManager.getImagePath();
+            String enemyImagePath = request.getContextPath() + "/" + enemyImageManager.getImagePath();
+
+            // リクエストに画像パスとゲームオブジェクトをセット
+            request.setAttribute("playerImagePath", playerImagePath);
+            request.setAttribute("enemyImagePath", enemyImagePath);
+            request.setAttribute("game", game);
+
+            // 次の質問があるかチェック
             if (game.hasNextQuestion()) {
-                game.moveToNextQuestion();
-                request.setAttribute("game", game);
+                game.moveToNextQuestion(); // 次の質問へ移動
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/QuestionView.jsp");
                 dispatcher.forward(request, response);
             } else {
-                // 最後の質問を解き終わった場合のクリア/オーバー判定
-                String resultPage = game.getPlayerCharacter().isAlive()
-                                    ? "/jsp/GameClearView.jsp"
-                                    : "/jsp/GameOverView.jsp";
+                // 全ての質問が終わった場合、HPを比較して結果を表示
+                String resultPage;
+                if (game.getPlayerCharacter().getHp() > game.getEnemyCharacter().getHp()) {
+                    System.out.println("Player wins. Redirecting to GameClearView.jsp.");
+                    resultPage = "/jsp/GameClearView.jsp";
+                } else if (game.getPlayerCharacter().getHp() < game.getEnemyCharacter().getHp()) {
+                    System.out.println("Enemy wins. Redirecting to GameOverView.jsp.");
+                    resultPage = "/jsp/GameOverView.jsp";
+                } else {
+                    System.out.println("It's a draw. Redirecting to GameClearView.jsp.");
+                    resultPage = "/jsp/GameClearView.jsp";
+                }
 
-                // ゲームオブジェクトをセッションから削除
-                request.getSession().removeAttribute("game");
-                System.out.println("Game object removed from session scope.");
-
-                request.setAttribute("game", game);
+                request.getSession().removeAttribute("game"); // ゲームオブジェクトをセッションから削除
                 RequestDispatcher dispatcher = request.getRequestDispatcher(resultPage);
                 dispatcher.forward(request, response);
             }
@@ -157,4 +176,5 @@ public class GameController extends HttpServlet {
             throw new ServletException("Failed to submit answer", e);
         }
     }
+
 }
