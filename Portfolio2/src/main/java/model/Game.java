@@ -6,8 +6,8 @@ public class Game {
     private int id;
     private Character playerCharacter;
     private Character enemyCharacter;
-    private List<Question> questions; // 質問リスト
-    private int currentIndex;         // 現在の質問のインデックス
+    private List<Question> questions; 
+    private int currentIndex;
 
     public Game(int id, Character playerCharacter, Character enemyCharacter, Question firstQuestion, List<Question> questions) {
         this.id = id;
@@ -30,7 +30,7 @@ public class Game {
     }
 
     public Question getCurrentQuestion() {
-        return questions.get(currentIndex); // 現在の質問を取得
+        return questions.get(currentIndex); 
     }
 
     public boolean isGameOver() {
@@ -47,16 +47,11 @@ public class Game {
     }
 
     public void checkAnswer(String answer) {
-        System.out.println("DEBUG: Correct Answer = " + getCurrentQuestion().getCorrectAnswer());
-        System.out.println("DEBUG: User Answer = " + answer);
-
         // 前方一致で回答をチェック
         if (answer.trim().startsWith(getCurrentQuestion().getCorrectAnswer().trim())) {
-            enemyCharacter.reduceHp(10); // 正解時: 敵のHPを減らす
-            System.out.println("DEBUG: Enemy HP reduced to " + enemyCharacter.getHp());
+            enemyCharacter.reduceHp(5);
         } else {
-            playerCharacter.reduceHp(10); // 不正解時: プレイヤーのHPを減らす
-            System.out.println("DEBUG: Player HP reduced to " + playerCharacter.getHp());
+            playerCharacter.reduceHp(5);
         }
     }
 
@@ -66,12 +61,12 @@ public class Game {
 
     public void moveToNextQuestion() {
         if (hasNextQuestion()) {
-            currentIndex++; // 次の質問に進む
+            currentIndex++; 
         }
     }
 
     public List<Question> getQuestions() {
-        return questions; // 質問リストを返す
+        return questions; 
     }
 
     public int getCurrentIndex() {

@@ -12,11 +12,11 @@ public class CharacterDAO {
     private static final String URL = "jdbc:h2:~/desktop/制作SQL/user";
     private static final String USER = "sa";
     private static final String PASSWORD = "";
-    private static final String DRIVER_CLASS = "org.h2.Driver"; // JDBCドライバーのクラス名
+    private static final String DRIVER_CLASS = "org.h2.Driver"; 
 
     public CharacterDAO() {
         try {
-            Class.forName(DRIVER_CLASS); // JDBCドライバーをロード
+            Class.forName(DRIVER_CLASS); 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("JDBCドライバーが見つかりませんでした", e);
         }

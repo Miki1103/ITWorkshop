@@ -6,17 +6,14 @@
     <meta charset="UTF-8">
     <title>エラー発生画面</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- リセットCSS -->
-     <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-
-    <!-- オリジナルCSS -->
-     <link rel="stylesheet" href="http://localhost:8080/Portfolio2/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+	<link rel="icon" href="http://localhost:8080/Portfolio2/images/logo2.png" type="image/png">
+    <link rel="stylesheet" href="http://localhost:8080/Portfolio2/css/style.css">
 
 </head>
 <body>
     <h1 class="align-center">
-        <a href="/Portfolio2/index.jsp"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="簿記試験攻略ゲーム">
+        <a href="/Portfolio2/index.jsp"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="ITパスポート試験攻略ゲーム">
             </a>
     </h1>
 

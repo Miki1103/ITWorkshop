@@ -17,7 +17,7 @@ public class UserDAO {
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)";
         try {
-            Class.forName("org.h2.Driver"); // ここでドライバーをロード
+            Class.forName("org.h2.Driver"); 
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, user.getUsername());
@@ -37,7 +37,7 @@ public class UserDAO {
     public User findUserByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE username = ?";
         try {
-            Class.forName("org.h2.Driver"); // JDBCドライバーを明示的にロード
+            Class.forName("org.h2.Driver"); 
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, username);
@@ -62,7 +62,7 @@ public class UserDAO {
     public void updatePassword(String username, String newPasswordHash) throws SQLException {
         String sql = "UPDATE users SET password_hash = ? WHERE username = ?";
         try {
-            Class.forName("org.h2.Driver"); // JDBCドライバーを明示的にロード
+            Class.forName("org.h2.Driver");
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, newPasswordHash);

@@ -49,7 +49,7 @@ public class Question {
     // オーバーライドされた hashCode メソッド
     @Override
     public int hashCode() {
-        return Integer.hashCode(id);                       // IDのハッシュコードを生成
+        return Integer.hashCode(id);
     }
 }
 

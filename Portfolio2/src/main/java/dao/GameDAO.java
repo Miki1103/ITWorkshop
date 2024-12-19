@@ -30,30 +30,14 @@ public class GameDAO {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-        	 stmt.setInt(1, game.getId());
-             stmt.setInt(2, game.getCurrentQuestion().getId());
-             stmt.setInt(3, game.getPlayerCharacter().getId());
-             stmt.setInt(4, game.getEnemyCharacter().getId());
+            stmt.setInt(1, game.getId());
+            stmt.setInt(2, game.getCurrentQuestion().getId());
+            stmt.setInt(3, game.getPlayerCharacter().getId());
+            stmt.setInt(4, game.getEnemyCharacter().getId());
 
-            // デバッグ用ログ
-            System.out.println("DEBUG: Saving GameStatus with ID: " + game.getId());
-            System.out.println("DEBUG: Current Question ID: " + game.getCurrentQuestion().getId());
-            System.out.println("DEBUG: Player Character ID: " + game.getPlayerCharacter().getId());
-            System.out.println("DEBUG: Enemy Character ID: " + game.getEnemyCharacter().getId());
-
-            // クエリ実行
-            int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("DEBUG: GameStatus saved successfully.");
-            } else {
-                System.out.println("DEBUG: No rows were inserted or updated.");
-            }
-
-        } catch (SQLException e) {
-            System.err.println("ERROR: Failed to save GameStatus.");
-            e.printStackTrace();
-            throw e;
+            stmt.executeUpdate();
         }
     }
 }
+
 

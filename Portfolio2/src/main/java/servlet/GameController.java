@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dao.CharacterDAO;
@@ -27,15 +29,13 @@ public class GameController extends HttpServlet {
         try {
             gameDAO = new GameDAO();
             questionDAO = new QuestionDAO();
-            System.out.println("DAOs initialized successfully.");
         } catch (Exception e) {
-            System.out.println("Failed to initialize DAOs: " + e.getMessage());
             throw new ServletException("Initialization failed", e);
         }
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // GETリクエストをPOST処理に委譲
         doPost(request, response);
     }
 
@@ -48,8 +48,6 @@ public class GameController extends HttpServlet {
             return;
         }
 
-        System.out.println("Action: " + action);
-
         try {
             switch (action) {
                 case "startGame":
@@ -59,13 +57,10 @@ public class GameController extends HttpServlet {
                     submitAnswer(request, response);
                     break;
                 default:
-                    System.out.println("Unknown action: " + action);
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action: " + action);
                     break;
             }
         } catch (Exception e) {
-            System.out.println("Error in doPost: " + e.getMessage());
-            e.printStackTrace();
             throw new ServletException("Error occurred while processing action: " + action, e);
         }
     }
@@ -85,27 +80,27 @@ public class GameController extends HttpServlet {
                 throw new ServletException("No questions available.");
             }
 
-            Question firstQuestion = questions.get(0);
-            Game game = new Game(1, playerCharacter, enemyCharacter, firstQuestion, questions);
+            // Shuffle questions randomly and select first 20
+            Collections.shuffle(questions);
+            List<Question> selectedQuestions = new ArrayList<>();
+            for (int i = 0; i < Math.min(20, questions.size()); i++) {
+                selectedQuestions.add(questions.get(i));
+            }
 
-            System.out.println("Game created with ID: " + game.getId());
+            Question firstQuestion = selectedQuestions.get(0);
+            Game game = new Game(1, playerCharacter, enemyCharacter, firstQuestion, selectedQuestions);
 
-            // キャラクター画像のパスを生成
             CharacterImageManager playerImageManager = new CharacterImageManager(playerCharacter);
             CharacterImageManager enemyImageManager = new CharacterImageManager(enemyCharacter);
-            
+
             request.getSession().setAttribute("game", game);
             request.setAttribute("playerImagePath", playerImageManager.getImagePath());
             request.setAttribute("enemyImagePath", enemyImageManager.getImagePath());
-            request.setAttribute("questions", questions);
-
-            System.out.println("Game object and image paths set in request scope.");
+            request.setAttribute("questions", selectedQuestions);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/QuestionView.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
-            System.out.println("Failed to start the game: " + e.getMessage());
-            e.printStackTrace();
             throw new ServletException("Failed to start the game", e);
         }
     }
@@ -114,67 +109,65 @@ public class GameController extends HttpServlet {
         try {
             Game game = (Game) request.getSession().getAttribute("game");
             if (game == null) {
-                System.out.println("No game object in session. Redirecting to index page.");
                 response.sendRedirect("/Portfolio2/index.jsp");
                 return;
             }
 
-            // ユーザーの回答を取得し、nullチェック
             String userAnswer = request.getParameter("answer");
 
             if (userAnswer == null || userAnswer.trim().isEmpty()) {
-                System.out.println("User did not select an answer. Redirecting to NullError.jsp.");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/NullError.jsp");
-                dispatcher.forward(request, response);
+                // 回答が入力されていない場合はセッションをリセットし、NullError.jsp へ移動
+                request.getSession().removeAttribute("game"); // セッションからゲームデータを削除
+                response.sendRedirect(request.getContextPath() + "/jsp/NullError.jsp");
                 return;
             }
 
+            // 現在の質問と正解を取得
+            Question currentQuestion = game.getCurrentQuestion();
+            int questionId = currentQuestion.getId();
+
+            QuestionDAO questionDAO = new QuestionDAO();
+            String correctAnswer = questionDAO.getCorrectAnswer(questionId);
+
             // ユーザーの回答をチェック
+            boolean isCorrect = userAnswer.trim().equals(correctAnswer.trim());
             game.checkAnswer(userAnswer.trim());
 
-            System.out.println("DEBUG: Player HP: " + game.getPlayerCharacter().getHp());
-            System.out.println("DEBUG: Enemy HP: " + game.getEnemyCharacter().getHp());
-
-            // キャラクター画像のパスを再設定
+            // キャラクター画像のパスを更新
             CharacterImageManager playerImageManager = new CharacterImageManager(game.getPlayerCharacter());
             CharacterImageManager enemyImageManager = new CharacterImageManager(game.getEnemyCharacter());
 
             String playerImagePath = request.getContextPath() + "/" + playerImageManager.getImagePath();
             String enemyImagePath = request.getContextPath() + "/" + enemyImageManager.getImagePath();
 
-            // リクエストに画像パスとゲームオブジェクトをセット
             request.setAttribute("playerImagePath", playerImagePath);
             request.setAttribute("enemyImagePath", enemyImagePath);
-            request.setAttribute("game", game);
 
-            // 次の質問があるかチェック
+            request.setAttribute("correctAnswer", correctAnswer);
+            request.setAttribute("userAnswer", userAnswer);
+            request.setAttribute("isCorrect", isCorrect);
+
+            // 次の質問があるか確認
             if (game.hasNextQuestion()) {
-                game.moveToNextQuestion(); // 次の質問へ移動
+                game.moveToNextQuestion();
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/QuestionView.jsp");
                 dispatcher.forward(request, response);
             } else {
-                // 全ての質問が終わった場合、HPを比較して結果を表示
                 String resultPage;
                 if (game.getPlayerCharacter().getHp() > game.getEnemyCharacter().getHp()) {
-                    System.out.println("Player wins. Redirecting to GameClearView.jsp.");
                     resultPage = "/jsp/GameClearView.jsp";
-                } else if (game.getPlayerCharacter().getHp() < game.getEnemyCharacter().getHp()) {
-                    System.out.println("Enemy wins. Redirecting to GameOverView.jsp.");
-                    resultPage = "/jsp/GameOverView.jsp";
                 } else {
-                    System.out.println("It's a draw. Redirecting to GameClearView.jsp.");
-                    resultPage = "/jsp/GameClearView.jsp";
+                    resultPage = "/jsp/GameOverView.jsp";
                 }
-
-                request.getSession().removeAttribute("game"); // ゲームオブジェクトをセッションから削除
+                request.getSession().removeAttribute("game");
                 RequestDispatcher dispatcher = request.getRequestDispatcher(resultPage);
                 dispatcher.forward(request, response);
             }
         } catch (Exception e) {
-            System.out.println("Failed to submit answer: " + e.getMessage());
-            e.printStackTrace();
             throw new ServletException("Failed to submit answer", e);
         }
     }
 
 }
+
+

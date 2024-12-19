@@ -8,6 +8,9 @@
 
     <!-- リセットCSS -->
      <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+     
+      <!-- ファビコンの設定 -->
+    <link rel="icon" href="http://localhost:8080/Portfolio2/images/logo2.png" type="image/png">
 
     <!-- オリジナルCSS -->
      <link rel="stylesheet" href="http://localhost:8080/Portfolio2/css/style.css">
@@ -15,7 +18,7 @@
 </head>
 <body>
     <h1 class="align-center">
-        <a href="/Portfolio2/index.jsp"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="簿記試験攻略ゲーム">
+        <a href="/Portfolio2/index.jsp"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="ITパスポート試験攻略ゲーム">
             </a>
     </h1>
 
@@ -35,14 +38,15 @@
             ルール② 問題の形式<br>
         </h3>
         <ul>
-            <li>出題されるのは簿記試験に関する選択問題です（全20問）。</li>
-            <li>各問題に正解すると敵キャラに攻撃を与えてダメージを与えられます。問題を間違えると味方キャラがダメージを受け、HPが減ります。</li>
+            <li>ITパスポート試験に関する選択問題が、ランダムに計20問出題されます。</li>
+            <li>各問題に正解すると敵キャラに攻撃を与えて5ダメージを与えられます。問題を間違えると味方キャラが5ダメージを受け、HPが減ります。</li>
         </ul>
         <h3 class="start align-center">
             ルール③ 勝敗条件<br>
         </h3>
         <ul>
-            <li>敵キャラのHPを0にするとゲームクリアです。一方で、味方キャラのHPが0になると ゲームオーバー となります。</li>
+            <li>味方キャラが敵キャラクターのHPを上回るとゲームクリアです。一方で、味方キャラが敵キャラクターのHPを下回ると ゲームオーバー となります。</li>
+            <li>ゲーム終了時に同じHPの値の場合はゲームクリアとします。</li>
         </ul>
     <br>
     <a href="/Portfolio2/jsp/QuestionView.jsp" class="btn2">ゲームスタート画面へ</a>

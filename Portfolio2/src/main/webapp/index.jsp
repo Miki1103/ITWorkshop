@@ -6,22 +6,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>スタート画面</title>
- 
-    <!-- リセットCSS -->
      <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-
-    <!-- オリジナルCSS -->
-     <link rel="stylesheet" href="http://localhost:8080/Portfolio2/css/style.css">
-
+    <link rel="icon" href="http://localhost:8080/Portfolio2/images/logo2.png" type="image/png">
+    <link rel="stylesheet" href="http://localhost:8080/Portfolio2/css/style.css">
 </head>
 <body>
     <h1 class="align-center">
-        <a href="/Portfolio2/index.jsp"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="簿記試験攻略ゲーム">
+        <a href="/Portfolio2/index.jsp"><img class="logo" src="http://localhost:8080/Portfolio2/images/logo1.png" alt="ITパスポート試験攻略ゲーム">
             </a>
     </h1>
 
     <h2 class="start align-center">
-        ITパスポート試験の勉強をゲーム感覚で行えるゲームです。<br>
+        遊びながら学べる！ITパスポート試験対策ゲーム<br>
     </h2>
 
     <div class="login-page">
