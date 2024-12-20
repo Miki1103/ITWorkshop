@@ -21,7 +21,7 @@
 ## アプリ使用ターゲット層
 新生活を始める10代から20代の若年層をメインターゲットとしています。
 
-![Image1](https://github.com/Miki1103/ITWorkshop/images/github1.png)
+![Image1](/images/github1.png)
 
 ## アプリ作成時にこだわったポイント
 - **分かりやすく、親しみやすいデザイン**  
