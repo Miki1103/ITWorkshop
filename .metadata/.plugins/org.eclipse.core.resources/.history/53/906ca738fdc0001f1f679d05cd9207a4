@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -6,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="掃除機や電子レンジなど、あなたにぴったりな家電を診断できるアプリ">
     
-    <title>家電おすすめアプリ</title>
+    <title>レンジの診断</title>
 
      <!-- viewportの指定 -->
      <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +18,7 @@
 
     <!-- Googleフォント -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Zen+Maru+Gothic:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
     <!-- CSS-->
@@ -40,20 +42,48 @@
         </ul>    
         </nav>
     </header>
-        <h2 class="page-title">生活に欠かせない家電</h2>
     
-    <div class="align-center">
-        <img src="http://localhost:8080/Portfolio1/images/1.png" alt="家電診断スタート画面">
-    </div>
-    
-    <section class="about">
-        <h3 class="heading-large">家電おすすめアプリとは？</h3>
-        <p>お一人おひとりにぴったりな家電を簡単に診断し、商品選びのお手伝いをするアプリです。ぜひ、日々の暮らしのために役立ててくださいね！</p>
+     <h2 class="page-title font-japanese">診断スタート</h2>
 
-        <div class="align-center">
-            <a class="btn" href="/Portfolio1/html/menu.html">今すぐ診断</a>
-        </div>
-    </section>
+     <div class="align-center">
+     <p>※必ずどちらかを選択してください</p>
+     </div>
+     
+     <main class="align-center category">
+     
+     <form action="Renji" method="post">
+     
+     <p>Q1.温める機能があれば充分？</p>
+
+    <input type="radio" name="q1" value="yes">充分<br>
+    <input type="radio" name="q1" value="no">足りない
+
+    <p>Q2.蒸し料理を作ることはある？</p>
+
+    <input type="radio" name="q2" value="yes">ある<br>
+    <input type="radio" name="q2" value="no">ない
+
+    <p>Q3.焼き菓子など頻繁に作る？</p>
+
+    <input type="radio" name="q3" value="yes">作る<br>
+    <input type="radio" name="q3" value="no">作らない
+
+    <p>Q4.操作性をかなり重視する？</p>
+
+    <input type="radio" name="q4" value="yes">一番重要<br>
+    <input type="radio" name="q4" value="no">特に気にしない
+
+    <p>Q5.コンパクトなサイズがいい？</p>
+
+    <input type="radio" name="q5" value="yes">はい<br>
+    <input type="radio" name="q5" value="no">特に気にしない<br>
+
+    
+    <input type="submit" value="診断結果を見る" class="align-center send-btn">
+    
+    </form>
+    
+    </main>
 
     <footer class="page-footer">
         <div class="copyright">

@@ -43,7 +43,7 @@
         </nav>
     </header>
     
-     <h2 class="page-title font-japanese">診断スタート</h2>
+     <h2 class="page-title">診断スタート</h2>
 
      <div class="align-center">
      <p>※必ずどちらかを選択してください</p>
@@ -77,9 +77,7 @@
     <input type="radio" name="q5" value="yes">はい<br>
     <input type="radio" name="q5" value="no">特に気にしない<br>
 
-    <div class="align-center send-btn">
-    <input type="submit" value="診断結果を見る">
-    </div>
+     <input type="submit" value="診断結果を見る" class="align-center send-btn">
     </form>
     
     </main>

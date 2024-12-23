@@ -40,7 +40,7 @@ pageEncoding="UTF-8"%>
         </nav>
     </header>
     
-    <h2 class="page-title font-japanese">診断スタート</h2>
+    <h2 class="page-title">診断スタート</h2>
 
     <div class="align-center">
         <p>※必ずどちらかを選択してください</p>
@@ -65,9 +65,7 @@ pageEncoding="UTF-8"%>
         <input type="radio" name="q4" value="yes">重いと使わない<br>
         <input type="radio" name="q4" value="no">特に気にしない<br>
 
-        <div class="align-center send-btn">
-            <input type="submit" value="診断結果を見る">
-        </div>
+         <input type="submit" value="診断結果を見る" class="align-center send-btn">
     </form>
     
     </main>
