@@ -27,7 +27,7 @@ img{
 
 /* 見出し */
 .font-japanese{
-    font-family: "Zen Maru Gothic", serif;
+    font-family: "Zen Maru Gothic", serif !important;
     font-weight: 700;
     font-style: normal;
   }
